@@ -73,7 +73,3 @@ This project uses multiple machine learning models to predict the probability of
 - Decision Tree: Simple model that splits features based on entropy or Gini impurity.
 - SVM (Support Vector Machine): Effective in high-dimensional spaces for classification tasks.
 The final churn probability is computed as an average of the individual model predictions. Visualizations include a gauge chart for overall churn probability and a bar chart comparing the output of each model.
-
-Replace `your-username` with your GitHub username, and if you want to use OpenAI, be sure to add the `GROQ_API_KEY` setup instructions in the **Set Up API Key** section.
-
-Let me know if there's anything else, and good luck with your deployment!
