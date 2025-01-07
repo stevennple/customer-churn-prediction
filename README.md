@@ -8,7 +8,6 @@ This project is an end-to-end pipeline for predicting customer churn, designed t
 - [Installation](#installation)
 - [Usage](#usage)
 - [Model Explanation](#model-explanation)
-- [License](#license)
 
 ---
 
