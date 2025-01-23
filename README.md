@@ -39,33 +39,33 @@ This project is an end-to-end pipeline for predicting customer churn, designed t
 ## Installation
 
 1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/your-username/customer-churn-prediction.git
-   cd customer-churn-prediction
+    ```bash
+    git clone https://github.com/your-username/customer-churn-prediction.git
+    cd customer-churn-prediction
 
 2. **Create and activate virtual environment:**
-  ```bash
-  python -m venv venv
-  source venv/bin/activate # On Windows: venv\Scripts\activate
-  ```
+    ```bash
+    python -m venv venv
+    source venv/bin/activate # On Windows: venv\Scripts\activate
+    ```
 
 3. **Set Up Dependencies:**
 - Install the required packages listed in requirements.txt:
-  ```bash
-  pip install -r requirements.txt
-  ```
+    ```bash
+    pip install -r requirements.txt
+    ```
   
 4. **Set Up API Key (Optional):**
 - If using the OpenAI API for predictive insights, ensure the API key is set up as an environment variable (.env):
-  ```bash
-  GROQ_API_KEY="your_api_key_here"
-  ```
+    ```bash
+    GROQ_API_KEY="your_api_key_here"
+    ```
 
 5. **Run the Application:**
 - Start the Streamlit app locally:
-  ```bash
-  streamlit run main.py
-  ```
+    ```bash
+    streamlit run main.py
+    ```
   
 ## Usage
 1. **Input Customer Details:** Enter customer attributes such as credit score, age, tenure, balance, etc.
