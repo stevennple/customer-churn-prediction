@@ -43,32 +43,41 @@ This project is an end-to-end pipeline for predicting customer churn, designed t
    git clone https://github.com/your-username/customer-churn-prediction.git
    cd customer-churn-prediction
 
-2. **Set Up Dependencies:**
+2. **Create and activate virtual environment:**
+  ```bash
+  python -m venv venv
+  source venv/bin/activate # On Windows: venv\Scripts\activate
+  ```
 
+3. **Set Up Dependencies:**
 - Install the required packages listed in requirements.txt:
   ```bash
   pip install -r requirements.txt
+  ```
   
-3. **Set Up API Key (Optional):**
-- If using the OpenAI API for predictive insights, ensure the API key is set up as an environment variable:
+4. **Set Up API Key (Optional):**
+- If using the OpenAI API for predictive insights, ensure the API key is set up as an environment variable (.env):
   ```bash
-  export GROQ_API_KEY=your_api_key_here
-4. **Run the Application:**
+  GROQ_API_KEY="your_api_key_here"
+  ```
+
+5. **Run the Application:**
 - Start the Streamlit app locally:
   ```bash
-  python3 -m streamlit run main.py
+  streamlit run main.py
+  ```
   
 ## Usage
-1. Input Customer Details: Enter customer attributes such as credit score, age, tenure, balance, etc.
-2. View Churn Prediction: The app will display a churn probability score and model-specific insights.
-3. Generate Retention Email: Get a suggested email template for retaining high-risk customers.
+1. **Input Customer Details:** Enter customer attributes such as credit score, age, tenure, balance, etc.
+2. **View Churn Prediction:** The app will display a churn probability score and model-specific insights.
+3. **Generate Retention Email:** Get a suggested email template for retaining high-risk customers.
 
 ## Model Explanation
 This project uses multiple machine learning models to predict the probability of customer churn. Models include:
 
-- XGBoost: Known for its accuracy and efficiency in handling structured data.
-- Random Forest: A versatile model that leverages multiple decision trees for better generalization.
-- K-Nearest Neighbors: A non-parametric model that predicts based on feature similarity.
-- Decision Tree: Simple model that splits features based on entropy or Gini impurity.
-- SVM (Support Vector Machine): Effective in high-dimensional spaces for classification tasks.
+- **XGBoost:** Known for its accuracy and efficiency in handling structured data.
+- **Random Forest:** A versatile model that leverages multiple decision trees for better generalization.
+- **K-Nearest Neighbors:** A non-parametric model that predicts based on feature similarity.
+- **Decision Tree:** Simple model that splits features based on entropy or Gini impurity.
+- **SVM (Support Vector Machine):** Effective in high-dimensional spaces for classification tasks.
 The final churn probability is computed as an average of the individual model predictions. Visualizations include a gauge chart for overall churn probability and a bar chart comparing the output of each model.
