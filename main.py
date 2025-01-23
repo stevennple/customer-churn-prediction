@@ -30,15 +30,15 @@ def load_model(filename):
       return None
     
 
-xgboost_model = load_model("xgb_model.pkl")
-naive_bayes_model = load_model("nb_model.pkl")
-random_forest_model = load_model("rf_model.pkl")
-decision_tree_model = load_model("dt_model.pkl")
-svm_model = load_model("svm_model.pkl")
-knn_model = load_model("knn_model.pkl")
-voting_classifier_model = load_model("voting_clf.pkl")
-xgboost_SMOTE_model = load_model("xgboost-SMOTE.pkl")
-xgboost_featureEngineered_model = load_model("xgboost-featureEngineered.pkl")
+xgboost_model = load_model("models/xgb_model.pkl")
+naive_bayes_model = load_model("models/nb_model.pkl")
+random_forest_model = load_model("models/rf_model.pkl")
+decision_tree_model = load_model("models/dt_model.pkl")
+svm_model = load_model("models/svm_model.pkl")
+knn_model = load_model("models/knn_model.pkl")
+voting_classifier_model = load_model("models/voting_clf.pkl")
+xgboost_SMOTE_model = load_model("models/xgboost-SMOTE.pkl")
+xgboost_featureEngineered_model = load_model("models/xgboost-featureEngineered.pkl")
 
 # Check if any of the critical models failed to load
 if xgboost_model is None or random_forest_model is None or knn_model is None:
@@ -198,7 +198,7 @@ def generate_email(probability, input_dict, explanation, surname):
 
 st.title("Customer Churn Prediction")
 
-df = pd.read_csv("churn.csv")
+df = pd.read_csv("data/churn.csv")
 
 customers = [f"{row['CustomerId']} - {row['Surname']}" for _, row in df.iterrows()]
 
