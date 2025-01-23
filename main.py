@@ -46,8 +46,8 @@ if xgboost_model is None or random_forest_model is None or knn_model is None:
 
 
 def prepare_input(credit_score, location, gender, age, tenure, balance,
-                   num_products, has_credit_card, is_active_member,
-                   estimated_salary):
+                    num_products, has_credit_card, is_active_member,
+                    estimated_salary):
 
   input_dict = {
     "CreditScore": credit_score,
@@ -70,20 +70,24 @@ def prepare_input(credit_score, location, gender, age, tenure, balance,
 
 def make_predictions(input_df, input_dict):
   probabilities = {}
-  try:
-      probabilities["XGBoost"] = xgboost_model.predict_proba(input_df)[0][1]
-  except Exception as e:
-      st.write("Error in XGBoost model:", e)
+  
+  if xgboost_model is not None:
+    try:
+        probabilities["XGBoost"] = xgboost_model.predict_proba(input_df)[0][1]
+    except Exception as e:
+        st.write("Error in XGBoost model:", e)
 
-  try:
-      probabilities["Random Forest"] = random_forest_model.predict_proba(input_df)[0][1]
-  except Exception as e:
-      st.write("Error in Random Forest model:", e)
+  if random_forest_model is not None:
+    try:
+        probabilities["Random Forest"] = random_forest_model.predict_proba(input_df)[0][1]
+    except Exception as e:
+        st.write("Error in Random Forest model:", e)
 
-  try:
-      probabilities["K-Nearest Neighbors"] = knn_model.predict_proba(input_df)[0][1]
-  except Exception as e:
-      st.write("Error in K-Nearest Neighbors model:", e)
+  if knn_model is not None:
+    try:
+        probabilities["K-Nearest Neighbors"] = knn_model.predict_proba(input_df)[0][1]
+    except Exception as e:
+        st.write("Error in K-Nearest Neighbors model:", e)
 
   if probabilities:
       avg_probability = np.mean(list(probabilities.values()))
@@ -104,7 +108,6 @@ def make_predictions(input_df, input_dict):
 
   return avg_probability
 
-
 def explain_prediction(probability, input_dict, surname, df):
 
   prompt = f"""You are an expert data scientist at a bank, where you specialize in interpreting and explaining predictions of machine learning models. 
@@ -118,19 +121,19 @@ def explain_prediction(probability, input_dict, surname, df):
 
                   Feature | Importance
     ------------------------------------------------
-           NumOfProducts  |  0.323888
-          IsActiveMember  |  0.164146
-                     Age  |  0.109550
-       Geography_Germany  |  0.091373
-                 Balance  |  0.052786
-        Geography_France  |  0.046463
-           Gender_Female  |  0.045283
-         Geography_Spain  |  0.036855
-             CreditScore  |  0.035005
-        Estimated Salary  |  0.032655
-               HasCrCard  |  0.031940
-                  Tenure  |  0.030054
-              GenderMale  |  0.000000
+          NumOfProducts  |  0.323888
+          IsActiveMember |  0.164146
+                    Age  |  0.109550
+      Geography_Germany  |  0.091373
+                Balance  |  0.052786
+        Geography_France |  0.046463
+          Gender_Female  |  0.045283
+        Geography_Spain  |  0.036855
+            CreditScore  |  0.035005
+        Estimated Salary |  0.032655
+              HasCrCard  |  0.031940
+                  Tenure |  0.030054
+              GenderMale |  0.000000
 
 
   {pd.set_option("display.max_columns", None)}

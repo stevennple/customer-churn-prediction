@@ -1,4 +1,5 @@
 import plotly.graph_objects as go
+import streamlit as st
 
 def create_gauge_chart(probability):
     # Determine color based on churn probability
@@ -15,61 +16,61 @@ def create_gauge_chart(probability):
     # Create gauge chart
     fig = go.Figure(
         go.Indicator(mode="gauge+number",
-                     value=probability_percentage,  # Display as percentage
-                     domain={
-                         "x": [0, 1],
-                         "y": [0, 1]
-                     },
-                     title={
-                         "text": "Churn Probability",
-                         "font": {
-                             "size": 24,
-                             "color": "white"
-                         }
-                     },
-                     number={"font": {
-                         "size": 40,
-                         "color": "white"
-                     }},
-                     gauge={
-                         "axis": {
-                             "range": [0, 100],  # Full percentage range
-                             "tickwidth": 1,
-                             "tickcolor": "white",
-                             "ticklen": 10,  # Length of ticks
-                             "tickfont": {
-                                 "size": 14
-                             },
-                             "tickvals": [0, 25, 50, 75, 100],  # Fixed ticks to enforce range
-                         },
-                         "bar": {
-                             "color": color  # Adjust color based on probability range
-                         },
-                         "bgcolor": "rgba(0,0,0,0)",
-                         "borderwidth": 2,
-                         "bordercolor": "white",
-                         "steps": [
-                             {"range": [0, 30], "color": "rgba(0,255,0,0.3)"},
-                             {"range": [30, 60], "color": "rgba(255,255,0,0.3)"},
-                             {"range": [60, 100], "color": "rgba(255,0,0,0.3)"}
-                         ],
-                         "threshold": {
-                             "line": {
-                                 "color": "white",
-                                 "width": 4
-                             },
-                             "thickness": 0.75,
-                             "value": 100
-                         }
-                     }))
+                    value=probability_percentage,  # Display as percentage
+                    domain={
+                        "x": [0, 1],
+                        "y": [0, 1]
+                    },
+                    title={
+                        "text": "Churn Probability",
+                        "font": {
+                            "size": 24,
+                            "color": "white"
+                        }
+                    },
+                    number={"font": {
+                        "size": 40,
+                        "color": "white"
+                    }},
+                    gauge={
+                        "axis": {
+                            "range": [0, 100],  # Full percentage range
+                            "tickwidth": 1,
+                            "tickcolor": "white",
+                            "ticklen": 10,  # Length of ticks
+                            "tickfont": {
+                                "size": 14
+                            },
+                            "tickvals": [0, 25, 50, 75, 100],  # Fixed ticks to enforce range
+                        },
+                        "bar": {
+                            "color": color  # Adjust color based on probability range
+                        },
+                        "bgcolor": "rgba(0,0,0,0)",
+                        "borderwidth": 2,
+                        "bordercolor": "white",
+                        "steps": [
+                            {"range": [0, 30], "color": "rgba(0,255,0,0.3)"},
+                            {"range": [30, 60], "color": "rgba(255,255,0,0.3)"},
+                            {"range": [60, 100], "color": "rgba(255,0,0,0.3)"}
+                        ],
+                        "threshold": {
+                            "line": {
+                                "color": "white",
+                                "width": 4
+                            },
+                            "thickness": 0.75,
+                            "value": 100
+                        }
+                    }))
 
     # Update chart layout with increased right margin
     fig.update_layout(paper_bgcolor="rgba(0,0,0,0)",
-                      plot_bgcolor="rgba(0,0,0,0)",
-                      font={"color": "white"},
-                      width=450,  # Increase width slightly
-                      height=300,
-                      margin=dict(l=20, r=40, t=50, b=20))  # Increased right margin
+                    plot_bgcolor="rgba(0,0,0,0)",
+                    font={"color": "white"},
+                    width=450,  # Increase width slightly
+                    height=300,
+                    margin=dict(l=20, r=40, t=50, b=20))  # Increased right margin
     return fig
 
 
@@ -77,25 +78,25 @@ def create_gauge_chart(probability):
 
 
 def create_model_probability_chart(probabilities):
-  if not probabilities:
-      st.write("No model probabilities available.")
-      return go.Figure()  # Return an empty figure to avoid plotting errors
+    if not probabilities:
+        st.write("No model probabilities available.")
+        return go.Figure()  # Return an empty figure to avoid plotting errors
 
-  models = list(probabilities.keys())
-  probs = [p * 100 for p in probabilities.values()]  # Convert to percentage
+    models = list(probabilities.keys())
+    probs = [p * 100 for p in probabilities.values()]  # Convert to percentage
 
-  fig = go.Figure(data=[
-      go.Bar(y=models, x=probs, orientation="h", text=[f"{p:.2f}%" for p in probs], textposition="auto")
-  ])
+    fig = go.Figure(data=[
+        go.Bar(y=models, x=probs, orientation="h", text=[f"{p:.2f}%" for p in probs], textposition="auto")
+    ])
 
-  fig.update_layout(
-      title="Churn Probability by Model",
-      yaxis_title="Models",
-      xaxis_title="Probability (%)",
-      xaxis=dict(tickformat=".0%", range=[0, 100]),
-      height=400,
-      margin=dict(l=20, r=20, t=40, b=20)
-  )
+    fig.update_layout(
+        title="Churn Probability by Model",
+        yaxis_title="Models",
+        xaxis_title="Probability (%)",
+        xaxis=dict(tickformat=".0%", range=[0, 100]),
+        height=400,
+        margin=dict(l=20, r=20, t=40, b=20)
+    )
 
-  return fig
+    return fig
 
