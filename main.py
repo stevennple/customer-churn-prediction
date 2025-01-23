@@ -213,8 +213,6 @@ def generate_email(probability, input_dict, explanation, surname):
       return f"Error generating email: {str(e)}"
 
 
-
-
 st.title("Customer Churn Prediction")
 
 df = pd.read_csv("data/churn.csv")
