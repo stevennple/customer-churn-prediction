@@ -56,7 +56,7 @@ This project is an end-to-end pipeline for predicting customer churn, designed t
 4. **Run the Application:**
 - Start the Streamlit app locally:
   ```bash
-  streamlit run main.py
+  python3 -m streamlit run main.py
   
 ## Usage
 1. Input Customer Details: Enter customer attributes such as credit score, age, tenure, balance, etc.

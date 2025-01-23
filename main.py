@@ -6,16 +6,25 @@ import os
 from openai import OpenAI
 import plotly.graph_objects as go
 import utils as ut
+from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv()
 
+# Initialize client with better error handling
+client = None
 api_key = os.getenv("GROQ_API_KEY")
+
 if not api_key:
     st.error("API key for the external service is missing. Please check the environment configuration.")
 else:
-    client = OpenAI(
-        base_url="https://api.groq.com/openai/v1",
-        api_key=api_key
-    )
+    try:
+        client = OpenAI(
+            base_url="https://api.groq.com/openai/v1",
+            api_key=api_key
+        )
+    except Exception as e:
+        st.error(f"Failed to initialize client: {e}")
 
 
 def load_model(filename):
@@ -109,6 +118,9 @@ def make_predictions(input_df, input_dict):
   return avg_probability
 
 def explain_prediction(probability, input_dict, surname, df):
+  global client
+  if client is None:
+      return "Unable to generate explanation - API client not initialized."
 
   prompt = f"""You are an expert data scientist at a bank, where you specialize in interpreting and explaining predictions of machine learning models. 
   
@@ -155,17 +167,24 @@ def explain_prediction(probability, input_dict, surname, df):
 
   print("EXPLANATION PROMPT", prompt)
 
-  raw_response = client.chat.completions.create(
-    model="llama-3.2-3b-preview",
-    messages=[{
-      "role": "user",
-      "content": prompt
-    }],
-  )
-  return raw_response.choices[0].message.content
+  try:
+      raw_response = client.chat.completions.create(
+          model="llama-3.1-8b-instant",
+          messages=[{
+              "role": "user",
+              "content": prompt
+          }],
+      )
+      return raw_response.choices[0].message.content
+  except Exception as e:
+      return f"Error generating explanation: {str(e)}"
 
 
 def generate_email(probability, input_dict, explanation, surname):
+  global client
+  if client is None:
+      return "Unable to generate email - API client not initialized."
+  
   prompt = f"""You are a manager at SL Bank. You are responsible for ensuring that customers stay with the bank and are incentivized with various offers. 
 
   You noticed a customer named {surname} who has a {round(probability * 100, 1)}% probability of churning. 
@@ -181,17 +200,17 @@ def generate_email(probability, input_dict, explanation, surname):
   Make sure to list out a set of incentives tailored to the customer's situation in a neat bullet point list format Don't ever mention the probability of churning, or the machine learning model to the customer.
   """
 
-  raw_response = client.chat.completions.create(
-    model="llama-3.1-8b-instant",
-    messages=[{
-      "role": "user",
-      "content": prompt
-    }],
-  )
-
-  print("\n\nEMAIL PROMPT", prompt)
-
-  return raw_response.choices[0].message.content
+  try:
+      raw_response = client.chat.completions.create(
+          model="llama-3.1-8b-instant",
+          messages=[{
+              "role": "user",
+              "content": prompt
+          }],
+      )
+      return raw_response.choices[0].message.content
+  except Exception as e:
+      return f"Error generating email: {str(e)}"
 
 
 
